@@ -1,0 +1,254 @@
+0. Introduction
+
+In this video, I will explain what a manifold is,
+and give three unusual examples: colours, trees, and probability distributions.
+
+When you have a set of points, or observations in statistics,
+you can represent them as a scatterplot, in the plane.
+
+More generally, if you have objects with notions of distance and angle between them,
+you can project them onto a plane, using random projections,
+as here,
+or some other dimension reduction algorithm,
+such as PCA, t-SNE or UMAP.
+
+But is the plane, a Euclidean space, the only "space" in which we could plot or embed our data?
+Couldn't there be a a better one, more accurately respecting the "shape" of the data?
+
+There are several simple alternatives.
+Instead of a plane, the data could live on a sphere,
+or a torus,
+or a higher-genus surface,
+or a saddle,
+or something even more complicated. 
+
+We can compare some of those surfaces using the notion of "curvature".
+Flat (or Euclidean) space has zero curvature;
+spherical space has positive curvature;
+hyperbolic space has negative curvature.
+
+On the plane, which has curvature zero,
+the length of a circle of radius R is 2πR.
+On a sphere, which has positive curvature,
+the length of a circle is less than 2πR.
+On a saddle, which has negative curvature,
+it is more than 2πR.
+
+(For those examples, the curvature is constant
+but, for more complicated surfaces, it can vary, and be sometimes positive, sometimes negative.)
+
+Flat, spherical and hyperbolic surfaces are all around us.
+Corals are a visual example, but there are many others.
+
+Let us now present a few surprising examples
+of such spaces, or "manifolds".
+
+1. Colours
+
+Humans have three types of colour-sensitive cells in their retinas:
+for them, colour is a 3-dimensional quantity.
+These are the three "primary" colours.
+It is different for other animals, who may have more (birds) or fewer (dogs).
+
+There are different ways of representing those 3 dimensions,
+different ways of choosing coordinates.
+Computers use RGB coordinates, red, green and blue.
+Printers use CYMK coordinates, cyan, yellow and magenta.
+Artists use a "colour triangle" made of red, blue and yellow.
+
+Are those representations equivalent or is one better than the others?
+Are things that simple?
+
+If you listen to painters, they will tell you that things are, indeed, more complicated.
+Three colours, red, blue and yellow are not enough:
+to faithfully reproduce the colours you see, you are advised to use two reds, two blues, and two yellows,
+a "warm" and a "cold" version of each.
+And perhaps also a few secondary colours, in particular greens.
+It starts to look more like a disk than a triangle...
+
+To complicate things further, those illustrations only show two dimensions of colour.
+They are easily expressed in polar coordinates:
+the radius measures saturation, the angle the hue.
+But what about the third dimension?
+We can make colours ligher or darker, i.e., closer to white or black.
+While doing so, differences between hues progressively disappear:
+as we move towards white or black, the disk becomes a point.
+The colour space looks like two cones.
+This is the HSL space: hue, saturation, luminance.
+
+It is not quite what artists are using.
+When fully saturated, not all colours have the same value:
+some are darker, some are lighter -- pure yellow is lighter than pure blue.
+We may prefer to use tilted cones.
+This is the HSV colour space: hue, saturation, value.
+
+While those colour spaces are more intuitive than the RGB one,
+they still have a problem: they are not perceptually uniform.
+The distance, measured in those spaces, does not reflect
+what we perceive as the distance between colours.
+For the same measured distance, in those coordinates, we can find pairs of colours
+that are undistinguishable to humans, and pairs that are clearly distinct.
+
+In their quest for a perceptually uniform space,
+scientists, in the 1940s, measured, experimentally,
+which colours were similar to humans and which were not.
+For each colour, they defined a set of undistinguishable colours around it:
+its MacAdam ellipse. 
+
+In flat space, we would expect those ellipses to be disks, all of the same size.
+It is actually not possible to find a coordinate system in which these MacAdam ellipses are disks: 
+colour spaces are not flat -- they are manifolds.
+
+We can, however, try to approximate them with a flat space:
+this is what the LUV and Lab spaces are doing.
+Their definitions are complicated and the coordinates counter-intuitive but,
+in polar coordinates, they are very similar to the HSV space:
+this is the HCL colour space,
+which you should be using if you are making plots on a computer.
+
+That was our first manifold example:
+colour spaces are 3-dimensional,
+vaguely look like two tilted cones,
+but they are not flat.
+
+2. Trees
+
+On to our second example: trees.
+
+A tree is a graph (a set of nodes, with edges between some of the nodes),
+connected, and with no cycles.
+One concern, when we draw trees in the plane,
+is that the further we move away from the root, the less space we have to put the nodes.
+This looks unavoidable: if all the nodes have the same degree,
+the number of nodes grows exponentially with the distance -- but the space to put them,
+i.e., the length of a circle, only grows linearly.
+
+But what if we could draw trees in hyperbolic space?
+We have seen that, in hyperbolic space, the length of a circle was larger
+than in the plane, and it can grow fast enough.
+
+Most machine learning algorithms need coordinates:
+to feed them trees (and, more generally, graphs),
+it may be preferable to put the nodes  
+in hyperbolic space rather than Euclidean space.
+
+3. Statistical Manifolds
+
+Our third and last manifold is more abstract: probability distributions.
+In which space do probability distributions live?
+How can we measure the distance between them?
+
+To fix the ideas, and keep the dimensions small, let us focus on unvariate Gaussian distributions.
+Since they have two parameters, we expect a 2-dimensional space. But which parameters should we use as coordinates?
+μ and σ²?
+μ and σ?
+μ and log(σ)?
+
+To see if one of those is suitable,
+let us imagine a ball, around each probability distribution,
+containing "statistically undistinguishable" distributions.
+How large should it be? If the standard deviation is high,
+the distribution is imprecise, and the ball should be large.
+On the contrary, if the standard deviation is small,
+the distribution is more concentrated, and any inferrence on it
+is more precise: the ball should be smaller.
+These balls cannot come from the Euclidean distance,
+with μ as the first coordinate
+and some transformation of σ as the second
+(because the distance would not depend on σ).
+
+2b. Models for the hyperbolic plane
+
+We have seen a few examples of hyperbolic space,
+but these were surfaces embedded in 3d space.
+What does the intrinsic geometry of hyperbolic space look like,
+without the embedding in 3-dimensional space?
+What would we see if we were inside that space?
+
+We would still have a notion of "straight" line, but they would look a bit different.
+For instance, here is the shortest path between the two probability distributions we were considering:
+since distances are shorter when the standard deviation is higher,
+first increasing the standard deviation, then changing the mean, and finally decreasing the standard deviation,
+is much shorter than just changing the mean, keeping the standard deviation low.
+
+This is the "Poincaré half plane":
+the "straight" lines (they are called "geodesics")
+are half-circles centered on the horizontal axis.
+Vertical lines are also geodesics.
+
+4. Conclusion
+
+We have seen that "spaces" could be curved;
+curvature measuring how large circles are
+when the radius grows.
+
+We have seen that colours (at least for humans)
+formed a 3-dimensional space, looking like two slanted cones;
+that its curvature could be estimated
+by looking at MacAdam ellipses,
+and that the HCL colour space was a flat approximation.
+
+We have seen that trees (and more generally graphs)
+were difficult to draw in the Euclidean plane,
+because of the lack of space
+as you move farther away from the root,
+but that hyperbolic space provided a better alternative.
+
+We have seen that univariate Gaussian distributions
+did not form a Euclidean space, with coordinates (μ,σ²),
+but a hyperbolic space -- the Poincaré half-plane.
+
+5. References
+
+To understand how colour works,
+you can turn to books for artists,
+for instance, those by James Gurney.
+
+Material on "colour grading" for photographers,
+such as Joanna Kustra's tutorial, may also be of interest.
+
+Some books on "colour theory" may be relevant,
+but most just contain an accumulation of supposedly universal
+but arbitrary facts about colour.
+
+The paper on the "colorspace" R package contains
+a more detailed pressentation of colour spaces,
+and advocates the HCL colour space.
+
+Over the past few years, there have been countless deep learning papers
+on hyperbolic spaces to embed trees or, more generally, graphs.
+
+Most of the material on statistical manifolds, or "information geometry",
+as the domain is called, are very technical.
+I cannot recommend any of them.
+
+6. Rigorous definitions
+
+I have not defined, and even named, the mathematical objects we are dealing with.
+
+I would have needed the notion of "metric space"
+(a set with a notion of "distance"),
+"continuous map" and "homeomorphism"
+before being able to define "manifolds".
+
+But these are not yet the objects we were dealing with:
+we were looking at "Riemannian manifolds":
+manifolds with some extra structure,
+which eventually allows us to define angles and distances.
+
+7. Links
+
+Classical painting atelier: https://www.amazon.com/Classical-Painting-Atelier-Contemporary-Traditional/dp/0823006581
+Color and light: https://www.amazon.com/Color-Light-Realist-Painter-Gurney/dp/0740797719
+Colour grading: https://www.youtube.com/watch?v=mC8ol2-V7Ck
+The HCL colourspace: https://www.jstatsoft.org/article/view/v096i01
+
+Graphs in hyperbolic space: https://arxiv.org/abs/1006.5169
+Trees in hyperbolic space: https://arxiv.org/abs/1105.3925
+Hierarchies in hyperbolic space: https://arxiv.org/abs/1806.03417
+Hyperbolic embeddings: https://arxiv.org/abs/1804.03329
+Hyperbolic Word Embeddings: https://arxiv.org/abs/1810.06546
+Hyperbolic Word embeddings for Chinese: https://arxiv.org/abs/1812.10408
+Coordinates in hyperbolic space: https://proceedings.neurips.cc/paper/2019/file/82c2559140b95ccda9c6ca4a8b981f1e-Paper.pdf
+
+Information geometry: https://www.youtube.com/watch?v=X3cBhBA1nNw
