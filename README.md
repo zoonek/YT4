@@ -1,3 +1,3 @@
 Code to generate the animations in the following video:
 
-    https://www.youtube.com/watch?v=-Ajmj9ROOjU
+[![Watch the video](https://img.youtube.com/vi/-Ajmj9ROOjU/maxresdefault.jpg)](https://youtu.be/-Ajmj9ROOjU)
